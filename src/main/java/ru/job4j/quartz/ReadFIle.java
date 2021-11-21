@@ -1,9 +1,7 @@
 package ru.job4j.quartz;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
-import java.nio.file.Path;
 
 public class ReadFIle {
 
