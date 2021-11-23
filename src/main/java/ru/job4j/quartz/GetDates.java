@@ -16,12 +16,12 @@ public class GetDates {
         List<String> strings = new ArrayList<>();
         for (Element td : row) {
             Element parent = td.parent();
-            String st = parent.child(5).text();
-            if(!strings.contains(st)) {
+            String st = parent.child(5).text().trim();
+            if (!strings.contains(st)) {
                 strings.add(st);
             }
         }
-        for(String dates: strings) {
+        for (String dates: strings) {
             System.out.println(dates);
         }
     }

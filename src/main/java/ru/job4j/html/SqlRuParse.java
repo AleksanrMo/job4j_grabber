@@ -11,7 +11,7 @@ public class SqlRuParse {
 
     public static void main(String[] args) throws Exception {
         GetDates datesFromSql = new GetDates();
-        datesFromSql.dates(" https://www.sql.ru/forum/job-offers",".altCol");
+        datesFromSql.dates(" https://www.sql.ru/forum/job-offers", ".altCol");
 
     }
 }
