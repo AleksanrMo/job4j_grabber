@@ -21,28 +21,23 @@ public class SqlRuDayTimeParser implements DayTimeParser {
         String[] localDate = dayTime.toString().split("-");
         String[] temp = dateForParse.split(" ");
         String[] time = temp[temp.length - 1].split(":");
+        int yearForTAndY = Integer.parseInt(localDate[0]);
+        int monthForTAndY  =  Integer.parseInt(localDate[1]);
+        int dayForTAndY =  Integer.parseInt(localDate[2]);
+        int hours =  Integer.parseInt(time[0]);
+        int min = Integer.parseInt(time[1]);
 
         if (temp[0].equals("сегодня,")) {
             localdateTime = LocalDateTime.of(
-                    Integer.parseInt(localDate[0]),
-                    Integer.parseInt(localDate[1]),
-                    Integer.parseInt(localDate[2]),
-                    Integer.parseInt(time[0]),
-                    Integer.parseInt(time[1]));
+                    yearForTAndY, monthForTAndY, dayForTAndY, hours, min);
         } else if (temp[0].equals("вчера,")) {
             localdateTime = LocalDateTime.of(
-                    Integer.parseInt(localDate[0]),
-                    Integer.parseInt(localDate[1]),
-                    Integer.parseInt(localDate[2]) - 1,
-                    Integer.parseInt(time[0]),
-                    Integer.parseInt(time[1]));
+                    yearForTAndY, monthForTAndY, dayForTAndY - 1, hours, min);
         } else {
             localdateTime = LocalDateTime.of(
                     Integer.parseInt(temp[2].substring(0, 2)),
                     Integer.parseInt(MONTHS.get(temp[1])),
-                    Integer.parseInt(temp[0]),
-                    Integer.parseInt(time[0]),
-                    Integer.parseInt(time[1]));
+                    Integer.parseInt(temp[0]), hours, min);
         }
         return localdateTime;
     }
