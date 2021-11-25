@@ -7,6 +7,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import ru.job4j.utils.SqlRuDayTimeParser;
 
+import java.io.IOException;
+
 public class SqlRuParse {
 
     public static void main(String[] args) throws Exception {
@@ -19,9 +21,19 @@ public class SqlRuParse {
                 Element el = td.parent();
                 Element href = td.child(0);
                 System.out.println(href.text());
-                System.out.println(href.attr("href"));
+                getMessage(href.attr("href"));
                 System.out.println(parser.parse(el.child(5).text().trim()));
+                System.out.println("--------------------------------");
             }
+        }
+    }
+
+    public  static  void getMessage(String url) throws IOException {
+        Document doc = Jsoup.connect(
+                "https://www.sql.ru/forum/1325330/lidy-be-fe-senior-cistemnye-analitiki-qa-i-devops-moskva-do-200t").get();
+        Elements elements = doc.select(".msgBody");
+        for (Element el: elements) {
+            System.out.println(el.text());
         }
     }
 }
