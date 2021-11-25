@@ -9,6 +9,7 @@ import ru.job4j.utils.Post;
 import ru.job4j.utils.SqlRuDayTimeParser;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class SqlRuParse {
         for (int i = 1; i <= 5; i++) {
             String string = String.format("https://www.sql.ru/forum/job-offers/%d", i);
             returnPosts(string).forEach(System.out::println);
-        }
+       }
     }
 
     public static String getMessage(String url) throws IOException {
@@ -29,21 +30,26 @@ public class SqlRuParse {
     }
 
     public static List<Post> returnPosts(String url) throws IOException {
-        SqlRuDayTimeParser parser = new SqlRuDayTimeParser();
         List<Post> list = new ArrayList<>();
-        int id = 0;
         Document doc = Jsoup.connect(url).get();
         Elements row = doc.select(".postslisttopic");
         for (Element td : row) {
-            id++;
-            Element el = td.parent();
-            Element href = td.child(0);
-            getMessage(href.attr("href"));
-            Post post = new Post(id, href.text(), href.attr("href"),
-                    getMessage(href.attr("href")), parser.parse(el.child(5).text().trim()));
-            list.add(post);
+            list.add(getPost(td.child(0).attr("href")));
         }
         return list;
     }
 
+        public static Post getPost(String link) throws IOException {
+        SqlRuDayTimeParser parser = new SqlRuDayTimeParser();
+        Document doc = Jsoup.connect(link).get();
+            Elements elements = doc.select(".msgTable");
+            Element e = elements.get(0);
+            String header = e.child(0).child(0).text();
+            String description = e.child(0).child(1).text();
+            String[]  date = e.child(0).child(2).child(0).text().split("\\[");
+            int id = Integer.parseInt(e.child(0).child(2).child(0).child(0).text());
+            LocalDateTime  localDateTime = parser.parse(date[0].trim());
+            return new Post(id, header, link, description, localDateTime);
+
+        }
 }
