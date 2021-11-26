@@ -1,5 +1,8 @@
-create table if not exists items(
+create table if not exists posts(
     id serial primary key,
-    name text,
-    created_date timestamp
+    post_id int,
+    name varchar(255),
+    link text,
+    description text,
+    created timestamp
 );
