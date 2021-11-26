@@ -21,31 +21,41 @@ public class SqlRuParse implements Parse {
     }
 
     @Override
-    public  List<Post> list(String url) throws IOException {
+    public  List<Post> list(String url) {
         List<Post> list = new ArrayList<>();
-        Document doc = Jsoup.connect(url).get();
-        Elements row = doc.select(".postslisttopic");
-        for (Element td : row) {
-            list.add(detail(td.child(0).attr("href")));
+        try {
+            Document doc = Jsoup.connect(url).get();
+            Elements row = doc.select(".postslisttopic");
+            for (Element td : row) {
+                list.add(detail(td.child(0).attr("href")));
+            }
+        } catch (IOException e) {
+               e.printStackTrace();
         }
         return list;
     }
 
     @Override
-        public  Post detail(String link) throws IOException {
-        Document doc = Jsoup.connect(link).get();
+        public  Post detail(String link)  {
+        Post post = null;
+        try {
+            Document doc = Jsoup.connect(link).get();
             Elements elements = doc.select(".msgTable");
             Element e = elements.get(0);
             String header = e.child(0).child(0).text();
             String description = e.child(0).child(1).text();
             String[]  date = e.child(0).child(2).child(0).text().split("\\[");
-            int id = Integer.parseInt(e.child(0).child(2).child(0).child(0).text());
             LocalDateTime  localDateTime = dayTimeParser.parse(date[0].trim());
-            return new Post(id, header, link, description, localDateTime);
+            post = new Post(header, description, link, localDateTime);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+            return post;
 
         }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SqlRuParse salParse = new SqlRuParse(new SqlRuDayTimeParser());
         for (int i = 1; i <= 5; i++) {
             String string = String.format("https://www.sql.ru/forum/job-offers/%d", i);
