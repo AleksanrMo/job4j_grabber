@@ -32,7 +32,7 @@ public class SqlRuParse implements Parse {
                 Post post =   detail(td.child(0).attr("href"));
                 if (post.getTitle().toLowerCase().contains("java")
                         && !post.getTitle().toLowerCase().contains("javascript")) {
-                    list.add(detail(td.child(0).attr("href")));
+                    list.add(post);
                 }
             }
             }
