@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SqlRuParse implements Parse {
 
@@ -24,10 +25,17 @@ public class SqlRuParse implements Parse {
     public  List<Post> list(String url) {
         List<Post> list = new ArrayList<>();
         try {
-            Document doc = Jsoup.connect(url).get();
+            for (int i = 1; i <= 5; i++) {
+                String string = String.format("%s/%d", url, i);
+                Document doc = Jsoup.connect(string).get();
             Elements row = doc.select(".postslisttopic");
             for (Element td : row) {
-                list.add(detail(td.child(0).attr("href")));
+                Post post =   detail(td.child(0).attr("href"));
+                if (post.getTitle().toLowerCase().contains("java")
+                        && !post.getTitle().toLowerCase().contains("javascript")) {
+                    list.add(detail(td.child(0).attr("href")));
+                }
+            }
             }
         } catch (IOException e) {
                e.printStackTrace();
@@ -50,16 +58,12 @@ public class SqlRuParse implements Parse {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-            return post;
+        return post;
 
         }
 
     public static void main(String[] args) {
         SqlRuParse salParse = new SqlRuParse(new SqlRuDayTimeParser());
-        for (int i = 1; i <= 5; i++) {
-            String string = String.format("https://www.sql.ru/forum/job-offers/%d", i);
-            salParse.list(string).forEach(System.out::println);
+            salParse.list("https://www.sql.ru/forum/job-offers").forEach(System.out::println);
         }
-    }
 }

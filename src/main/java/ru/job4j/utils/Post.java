@@ -16,8 +16,6 @@ public class Post {
         this.link = link;
         this.description = description;
         this.creation = creation;
-
-
     }
 
     @Override
@@ -33,6 +31,10 @@ public class Post {
                 && Objects.equals(link, post.link);
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(id, title, link);
@@ -43,8 +45,8 @@ public class Post {
         return "Post{"
                 + "id=" + id
                 + ", title='" + title + '\''
-                + ", link='" + link + '\''
-                + ", description='" + description + '\''
+                + ", link='" + description + '\''
+                + ", description='" + link + '\''
                 + ", creation=" + creation
                 + '}';
     }
