@@ -58,8 +58,7 @@ public class SqlRuParse implements Parse {
             e.printStackTrace();
         }
         return post;
-
-        }
+    }
 
     public static void main(String[] args) {
         SqlRuParse salParse = new SqlRuParse(new SqlRuDayTimeParser());
