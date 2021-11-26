@@ -1,7 +1,7 @@
-create table if not exists post(
+create table if not exists posts(
     id serial primary key,
     name varchar(255),
     description text,
-    link text constraint unique,
+    link text  UNIQUE,
     created timestamp
 );
