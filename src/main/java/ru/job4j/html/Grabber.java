@@ -2,7 +2,6 @@ package ru.job4j.html;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
-
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,7 +9,6 @@ import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Properties;
 import ru.job4j.utils.*;
-
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
