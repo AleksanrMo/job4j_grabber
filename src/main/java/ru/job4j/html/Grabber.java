@@ -100,7 +100,7 @@ public class Grabber implements Grab {
             grab.cfg();
             Scheduler scheduler = grab.scheduler();
             Store store = grab.store();
-            grab.init(new SqlRuParse(), store, scheduler);
+            grab.init(new SqlRuParse(new SqlRuDayTimeParser()), store, scheduler);
             grab.web(store);
         }
     }
