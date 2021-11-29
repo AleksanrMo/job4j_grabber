@@ -34,8 +34,9 @@ public class SqlRuDayTimeParser implements DayTimeParser {
             localdateTime = LocalDateTime.of(
                     yearForTAndY, monthForTAndY, dayForTAndY - 1, hours, min);
         } else {
+            String year = String.format("20%s", temp[2].substring(0, 2));
             localdateTime = LocalDateTime.of(
-                    Integer.parseInt(temp[2].substring(0, 2)),
+                    Integer.parseInt(year),
                     Integer.parseInt(MONTHS.get(temp[1])),
                     Integer.parseInt(temp[0]), hours, min);
         }
