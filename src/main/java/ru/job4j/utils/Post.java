@@ -17,6 +17,34 @@ public class Post {
         this.description = description;
         this.creation = creation;
     }
+    public Post(int id, String title, String description, String link, LocalDateTime creation) {
+        this.id = id;
+        this.title = title;
+        this.link = link;
+        this.description = description;
+        this.creation = creation;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDateTime getCreation() {
+        return creation;
+    }
 
     @Override
     public boolean equals(Object o) {
